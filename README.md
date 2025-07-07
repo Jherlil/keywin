@@ -94,7 +94,11 @@ Please read the CHANGELOG.md to see the new changes
 This program was originally developed on Linux.  A simple MinGW build
 is provided for Windows users so it can run natively without WSL.
 Install the "MSYS2 MinGW" toolchain and then run `make` from the MSYS2
-shell.  Ensure the OpenCL SDK and Pthreads libraries are installed.
+shell.  If an OpenCL runtime is not present the program now falls back to
+pure CPU mode, but installing the OpenCL SDK and drivers is recommended
+for best performance.
+If your system lacks the OpenCL headers entirely you can build without GPU
+support by running `make OPENCL=0`.
 
 Please install on your system
 
@@ -354,6 +358,11 @@ Address 1CUNEBjYrCn2y1SdiUMohaKUi4wpP326Lb
 rmd160 7dd65592d0ab2fe0d0257d571abf032cd9db93dc
 (Output omitted)
 ```
+You can also search using the BSGS mode which continues until every hash is found. Ensure the range covers the largest sample key (about 0x556e52):
+```
+./keyhunt -m rmd160-bsgs -f tests/1to32.rmd -r 1:1000000 -l compress -s 5 -t 4
+```
+
 
 test your luck with the next file for the puzzle #66
 

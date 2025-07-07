@@ -45,6 +45,9 @@ static inline void scalar_mul_win6_8way(const Int* k8, Point* P8);
 #include <fstream>
 #if defined(_WIN64) && !defined(__CYGWIN__)
 #include "getopt.h"
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
 #include <malloc.h>
 #else
@@ -1344,12 +1347,13 @@ int main(int argc, char **argv)	{
         init_generator();
         if(FLAG_OPENCL){
                 if(!sha256_opencl_init(OPENCL_SHADERS)){
-                        fprintf(stderr,"[E] Failed to init OpenCL\n");
-                        return 1;
+                        fprintf(stderr,"[W] Failed to init OpenCL, using CPU only\n");
+                        FLAG_OPENCL = 0;
+                } else {
+                        ripemd160_opencl_init(OPENCL_SHADERS);
+                        size_t sh = ocl_max_shaders();
+                        printf("[+] OpenCL using %zu shaders\n", sh);
                 }
-                ripemd160_opencl_init(OPENCL_SHADERS);
-                size_t sh = ocl_max_shaders();
-                printf("[+] OpenCL using %zu shaders\n", sh);
         }
 	if(FLAGMODE == MODE_BSGS )	{
 		printf("[+] Mode BSGS %s\n",bsgs_modes[FLAGBSGSMODE]);
@@ -2629,10 +2633,9 @@ int main(int argc, char **argv)	{
 				case 3:
 					tid[j] = CreateThread(NULL, 0, thread_process_bsgs_random, (void*)tt, 0, &s);
 					break;
-				case 4:
-					tid[j] = CreateThread(NULL, 0, thread_process_bsgs_dance, (void*)tt, 0, &s);
-					break;
-				}
+                                case 4:
+                                        tid[j] = CreateThread(NULL, 0, thread_process_bsgs_dance, (void*)tt, 0, &s);
+                                        break;
 #else
 				case 0:
 					s = pthread_create(&tid[j],NULL,thread_process_bsgs,(void *)tt);
