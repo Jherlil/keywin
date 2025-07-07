@@ -97,6 +97,8 @@ Install the "MSYS2 MinGW" toolchain and then run `make` from the MSYS2
 shell.  If an OpenCL runtime is not present the program now falls back to
 pure CPU mode, but installing the OpenCL SDK and drivers is recommended
 for best performance.
+If your system lacks the OpenCL headers entirely you can build without GPU
+support by running `make OPENCL=0`.
 
 Please install on your system
 
