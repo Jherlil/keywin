@@ -1347,12 +1347,13 @@ int main(int argc, char **argv)	{
         init_generator();
         if(FLAG_OPENCL){
                 if(!sha256_opencl_init(OPENCL_SHADERS)){
-                        fprintf(stderr,"[E] Failed to init OpenCL\n");
-                        return 1;
+                        fprintf(stderr,"[W] Failed to init OpenCL, using CPU only\n");
+                        FLAG_OPENCL = 0;
+                } else {
+                        ripemd160_opencl_init(OPENCL_SHADERS);
+                        size_t sh = ocl_max_shaders();
+                        printf("[+] OpenCL using %zu shaders\n", sh);
                 }
-                ripemd160_opencl_init(OPENCL_SHADERS);
-                size_t sh = ocl_max_shaders();
-                printf("[+] OpenCL using %zu shaders\n", sh);
         }
 	if(FLAGMODE == MODE_BSGS )	{
 		printf("[+] Mode BSGS %s\n",bsgs_modes[FLAGBSGSMODE]);

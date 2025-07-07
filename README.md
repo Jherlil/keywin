@@ -94,7 +94,9 @@ Please read the CHANGELOG.md to see the new changes
 This program was originally developed on Linux.  A simple MinGW build
 is provided for Windows users so it can run natively without WSL.
 Install the "MSYS2 MinGW" toolchain and then run `make` from the MSYS2
-shell.  Ensure the OpenCL SDK and Pthreads libraries are installed.
+shell.  If an OpenCL runtime is not present the program now falls back to
+pure CPU mode, but installing the OpenCL SDK and drivers is recommended
+for best performance.
 
 Please install on your system
 
