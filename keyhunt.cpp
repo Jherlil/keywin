@@ -2632,10 +2632,9 @@ int main(int argc, char **argv)	{
 				case 3:
 					tid[j] = CreateThread(NULL, 0, thread_process_bsgs_random, (void*)tt, 0, &s);
 					break;
-				case 4:
-					tid[j] = CreateThread(NULL, 0, thread_process_bsgs_dance, (void*)tt, 0, &s);
-					break;
-				}
+                                case 4:
+                                        tid[j] = CreateThread(NULL, 0, thread_process_bsgs_dance, (void*)tt, 0, &s);
+                                        break;
 #else
 				case 0:
 					s = pthread_create(&tid[j],NULL,thread_process_bsgs,(void *)tt);
