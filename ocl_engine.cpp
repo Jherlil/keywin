@@ -1,5 +1,10 @@
 #include "ocl_engine.h"
+#ifndef NO_OPENCL
+#ifndef CL_TARGET_OPENCL_VERSION
+#define CL_TARGET_OPENCL_VERSION 120
+#endif
 #include <CL/cl.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

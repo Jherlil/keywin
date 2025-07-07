@@ -94,7 +94,11 @@ Please read the CHANGELOG.md to see the new changes
 This program was originally developed on Linux.  A simple MinGW build
 is provided for Windows users so it can run natively without WSL.
 Install the "MSYS2 MinGW" toolchain and then run `make` from the MSYS2
-shell.  Ensure the OpenCL SDK and Pthreads libraries are installed.
+shell.  If an OpenCL runtime is not present the program now falls back to
+pure CPU mode, but installing the OpenCL SDK and drivers is recommended
+for best performance.
+If your system lacks the OpenCL headers entirely you can build without GPU
+support by running `make OPENCL=0`.
 
 Please install on your system
 
@@ -354,6 +358,11 @@ Address 1CUNEBjYrCn2y1SdiUMohaKUi4wpP326Lb
 rmd160 7dd65592d0ab2fe0d0257d571abf032cd9db93dc
 (Output omitted)
 ```
+You can also search using the BSGS mode which continues until every hash is found. Ensure the range covers the largest sample key (about 0x556e52):
+```
+./keyhunt -m rmd160-bsgs -f tests/1to32.rmd -r 1:1000000 -l compress -s 5 -t 4
+```
+
 
 test your luck with the next file for the puzzle #66
 
@@ -398,14 +407,14 @@ Example input file:
 A few substracted values from puzzle *40*
 
 ```
-034eee474fe724cb631d19f24934e88016e4ef2aee80d086621d87d7f6066ff860 # - 453856235784
-0274241b684e7c31e7933510b510aa14de9ac88ec3635bdd35a3bcf1d16da210be # + 453856235784
-03abc6aff092b9a64bf69e00f4ec7a8b7ca51cfc6656732cbbc9f5674925b88609 # - 529328067324
-034f4fe33b02c202b732d278f90eedc635af6f3be8a93c8d1cb0a01f6399aab2a4 # + 529328067324
-03716ff57705e6446ac3e217c8c8bd9e9c8e58547457a6fe93ac254c37fd48afcb # - 14711740067
-02ffa0769b0459c64b41f59f93495063ae031de0b846180bee37f921f20e141f60 # + 14711740067
-03de1df5d801bbd5e7d86577bf14950f732fd41e586945d06d19e0fdea41a37d62 # - 549755814000
-038d3711fd681e26c05b2f0cd423fa596e15054024e40add24a93bfa0c630531f1 # + 549755814000
+034eee474fe724cb631d19f24934e88016e4ef2aee80d086621d87d7f6066ff860 # - 69ABF09108
+0274241b684e7c31e7933510b510aa14de9ac88ec3635bdd35a3bcf1d16da210be # + 69ABF09108
+03abc6aff092b9a64bf69e00f4ec7a8b7ca51cfc6656732cbbc9f5674925b88609 # - 7B3E6952FC
+034f4fe33b02c202b732d278f90eedc635af6f3be8a93c8d1cb0a01f6399aab2a4 # + 7B3E6952FC
+03716ff57705e6446ac3e217c8c8bd9e9c8e58547457a6fe93ac254c37fd48afcb # - 36CE356A3
+02ffa0769b0459c64b41f59f93495063ae031de0b846180bee37f921f20e141f60 # + 36CE356A3
+03de1df5d801bbd5e7d86577bf14950f732fd41e586945d06d19e0fdea41a37d62 # - 8000000070
+038d3711fd681e26c05b2f0cd423fa596e15054024e40add24a93bfa0c630531f1 # + 8000000070
 03a2efa402fd5268400c77c20e574ba86409ededee7c4020e4b9f0edbee53de0d4 # target
 ```
 
@@ -439,9 +448,9 @@ rmd160 7c92500fa9d2ecbca5bdd61bb6a14a249669bae4
 After the hit we need to search the substracted index and make a simple math operation to get the real privatek:
 
 ```
-0274241b684e7c31e7933510b510aa14de9ac88ec3635bdd35a3bcf1d16da210be # + 453856235784
+0274241b684e7c31e7933510b510aa14de9ac88ec3635bdd35a3bcf1d16da210be # + 69ABF09108
 ```
-The Operation is `800258a2ce` hex (+/-) in this case + `453856235784` decimal equals to `E9AE4933D6`
+The operation is `800258a2ce` hex (+/-) + `69ABF09108` hex equals `E9AE4933D6`
 
 This is an easy example, I been trying the puzzle 120 with more than 500 millions of substracted keys and no luck.
 
