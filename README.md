@@ -354,6 +354,11 @@ Address 1CUNEBjYrCn2y1SdiUMohaKUi4wpP326Lb
 rmd160 7dd65592d0ab2fe0d0257d571abf032cd9db93dc
 (Output omitted)
 ```
+You can also search using the BSGS mode which continues until every hash is found. Ensure the range covers the largest sample key (about 0x556e52):
+```
+./keyhunt -m rmd160-bsgs -f tests/1to32.rmd -r 1:1000000 -l compress -s 5 -t 4
+```
+
 
 test your luck with the next file for the puzzle #66
 
