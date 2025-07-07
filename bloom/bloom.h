@@ -8,7 +8,10 @@
 #ifndef _BLOOM_H
 #define _BLOOM_H
 
-#ifdef _WIN64
+#if defined(_WIN64) && !defined(__CYGWIN__)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
 #endif
 

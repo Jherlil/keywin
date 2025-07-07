@@ -9,8 +9,10 @@
 #define _OLDBLOOM_H
 
 #if defined(_WIN64) && !defined(__CYGWIN__)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
-#else
 #endif
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,8 @@
 #include "Random.h"
 #if defined(_WIN32) || defined(_WIN64)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
 #include <wincrypt.h>
 #else
