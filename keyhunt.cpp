@@ -45,6 +45,9 @@ static inline void scalar_mul_win6_8way(const Int* k8, Point* P8);
 #include <fstream>
 #if defined(_WIN64) && !defined(__CYGWIN__)
 #include "getopt.h"
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
 #include <malloc.h>
 #else
